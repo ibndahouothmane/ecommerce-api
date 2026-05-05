@@ -1,0 +1,95 @@
+@baseUrl = http://localhost:3000
+
+### Health
+GET {{baseUrl}}/
+
+### Créer catégorie
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "nom": "Informatique",
+  "description": "Produits tech"
+}
+
+### Liste catégories
+GET {{baseUrl}}/categories
+
+### Créer produit
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "nom": "Clavier mécanique",
+  "description": "Clavier RGB",
+  "prix": 79.99,
+  "stock": 20,
+  "categoryId": 1
+}
+
+### Créer autre produit
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "nom": "Souris gamer",
+  "description": "Souris 16000 DPI",
+  "prix": 49.90,
+  "stock": 15,
+  "categoryId": 1
+}
+
+### Liste produits avec filtres
+GET {{baseUrl}}/products?category=1&minPrice=40&maxPrice=100&page=1
+
+### Détail produit avec catégorie
+GET {{baseUrl}}/products/1
+
+### Modifier produit
+PUT {{baseUrl}}/products/1
+Content-Type: application/json
+
+{
+  "prix": 69.99,
+  "stock": 25
+}
+
+### Créer commande
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "items": [
+    { "productId": 1, "quantite": 2 },
+    { "productId": 2, "quantite": 1 }
+  ]
+}
+
+### Stock insuffisant attendu: 400
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "items": [
+    { "productId": 1, "quantite": 999 }
+  ]
+}
+
+### Détail commande avec produits
+GET {{baseUrl}}/orders/1
+
+### Modifier statut commande
+PATCH {{baseUrl}}/orders/1/status
+Content-Type: application/json
+
+{
+  "status": "CONFIRMED"
+}
+
+### Stats bonus
+GET {{baseUrl}}/stats
+
+### Supprimer produit utilisé dans commande attendu: 409
+DELETE {{baseUrl}}/products/1
